@@ -4,6 +4,7 @@ import java.text.ParseException;
 import java.util.ArrayList;
 import java.time.LocalDate;
 import java.util.Date;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class Main {
@@ -34,6 +35,8 @@ public class Main {
 
                         case 1:
                             boolean flagStp = true;
+                            String userStudetPrintChoice;
+
                             do {
                                 Student student = inputNewStudent();
                                 studentsAll.add(student);
@@ -41,9 +44,13 @@ public class Main {
                                 System.out.println("Would you like to Add an Other Student?"
                                         + "\n1 for Yes."
                                         + "\n2 for No.");
-                                int userStudetPrintChoice = input.nextInt();
-                                if (userStudetPrintChoice == 2) {
+                                userStudetPrintChoice = input.nextLine();
+
+                                if ("1".equals(userStudetPrintChoice)) {
+                                } else if ("2".equals(userStudetPrintChoice)) {
                                     flagStp = false;
+                                } else {
+                                    System.out.println("Please Give 1 or 2.");
                                 }
                             } while (flagStp == true);
 
@@ -59,9 +66,13 @@ public class Main {
                                 System.out.println("Would you like to Add an Other Trainer?"
                                         + "\n1 for Yes."
                                         + "\n2 for No.");
-                                int userTrainerPrintChoice = input.nextInt();
-                                if (userTrainerPrintChoice == 2) {
+                                String userTrainerPrintChoice = input.nextLine();
+
+                                if ("1".equals(userTrainerPrintChoice)) {
+                                } else if ("2".equals(userTrainerPrintChoice)) {
                                     flagTtp = false;
+                                } else {
+                                    System.out.println("Please give 1 or 2.");
                                 }
                             } while (flagTtp == true);
                             break;
@@ -75,9 +86,12 @@ public class Main {
                                 System.out.println("Would you like to Add an Other Assignment?"
                                         + "\n1 for Yes."
                                         + "\n2 for No.");
-                                int userAssignmentPrintChoice = input.nextInt();
-                                if (userAssignmentPrintChoice == 2) {
+                                String userAssignmentPrintChoice = input.nextLine();
+                                if ("1".equals(userAssignmentPrintChoice)) {
+                                } else if ("2".equals(userAssignmentPrintChoice)) {
                                     flagAtp = false;
+                                } else {
+                                    System.out.println("Please give 1 or 2.");
                                 }
 
                             } while (flagAtp == true);
@@ -95,12 +109,15 @@ public class Main {
                                 System.out.println("Would you like to Add an Other Course?"
                                         + "\n1 for Yes."
                                         + "\n2 for No.");
-                                int userCoursePrintChoice = input.nextInt();
-                                if (userCoursePrintChoice == 2) {
+                                String userCoursePrintChoice = input.nextLine();
+                                if ("1".equals(userCoursePrintChoice)) {
+                                } else if ("2".equals(userCoursePrintChoice)) {
                                     flagCtp = false;
+                                } else {
+                                    System.out.println("Please give 1 or 2.");
                                 }
 
-                            } while (flagCtp == false);
+                            } while (flagCtp == true);
                             break;
 
                         case 5:
@@ -141,7 +158,7 @@ public class Main {
 
                 addDummyData();
                 createCourseInfomationListSynth();
-                //dummy
+            
                 printAllStudentsSynth(studentsAll);
                 System.out.println("Part1 Complete");
                 System.out.println();
@@ -237,7 +254,6 @@ public class Main {
 
         Scanner input = new Scanner(System.in);
 
-        boolean flag1 = false;
         int userChoise = 0;
 
         while (userChoise < 1 || userChoise > 3) {
@@ -250,7 +266,7 @@ public class Main {
             try {
                 userChoise = input.nextInt();
 
-            } catch (Exception inputInt) {
+            } catch (Exception e) {
                 String blackHole = input.nextLine();
                 System.out.println("Please give an input of integer number from (1,2,3) ");
 
@@ -403,9 +419,9 @@ public class Main {
         Scanner input = new Scanner(System.in);
 
         boolean flag1 = false;
-        int userChoise2 = -1;
-
-        while (userChoise2 < 0 || userChoise2 > 10) {
+        String userChoice2;
+        int userChoiceB = -1;
+        while (flag1 == false) {
 
             System.out.println("Greatings would  you like to input Data or use Synthetic Data?:"
                     + "\n" + " 1 for Student Creation."
@@ -419,18 +435,27 @@ public class Main {
                     + "\n" + " 9 for Students with more than one Assigment."
                     + "\n" + " 10 to Check Assignments for submission on requested Date."
                     + "\n" + " 0 for Exit.");
+
+            userChoice2 = input.nextLine();
+
             try {
-                userChoise2 = input.nextInt();
+                userChoiceB = Integer.parseInt(userChoice2);
+            } catch (NumberFormatException e) {
 
-            } catch (Exception n1) {
-                String blackHole = input.nextLine();
-                System.out.println("Please give an input of integer number from (0,1,2,3,4,5,6,7,8,9,10) ");
+                System.out.println("Please give Correct input type Integer.");
 
-                System.out.println(blackHole + " Is the error please give Correct input");
             }
 
+            if (userChoiceB < 0 || userChoiceB > 10) {
+
+                System.out.println("Please give an input of integer number from (0,1,2,3,4,5,6,7,8,9,10) ");
+
+            } else {
+                flag1 = true;
+            }
         }
-        return userChoise2;
+
+        return (int) userChoiceB;
 
     }
 
@@ -448,81 +473,97 @@ public class Main {
 
         String assignmentGivenDate = "00/00/0000";
 
-        boolean flagKoukou = true;
-        while (flagKoukou == true) {
-            flagKoukou = false;
-            try {
+        boolean invalidInput = true;
+        do {
 
-                assignmentGivenDate = input.nextLine();
-
-            } catch (Exception dateInput) {
-
-                flagKoukou = true;
+            assignmentGivenDate = input.nextLine();
+            Date temp = DateUtilities.convertedDateFromString(assignmentGivenDate);
+            if (temp == null) {
 
                 System.out.println("Please Try again to give Correct Date Format (dd/MM/YYYY) for example 31/03/2021");
-
+            } else {
+                invalidInput = false;
             }
 
-        }
-
-        String assignmentDeadLine = "00/00/0000";
+        } while (invalidInput == true);
+        String assignmentDeadLine = "00/00/0001";
         System.out.println("Please give Assigment's deadLine in the following format (dd/MM/YYYY)");
-        boolean flagKoukou1 = true;
+         invalidInput = true;
 
         do {
             assignmentDeadLine = input.nextLine();
-            Date temp = DateUtilities.convertedDateFromString(assignmentGivenDate);
+            Date temp = DateUtilities.convertedDateFromString(assignmentDeadLine);
             if (temp != null) {
 
-                if (temp.after(DateUtilities.convertedDateFromString(assignmentDeadLine))) {
+                if (temp.before(DateUtilities.convertedDateFromString(assignmentGivenDate))) {
 
-                    System.out.println("Please Try again to give Correct Date before DeadLine");
+                    System.out.println("Please Try again to give Correct Date after Given Date");
                 } else {
-                    flagKoukou = false;
+                    invalidInput = false;
                 }
+            } else {
+                System.out.println("Please give correct Date Format dd/MM/YYYY example 30/03/2021");
             }
 
-        } while (flagKoukou1 == true);
+        } while (invalidInput == true);
         String assignmentSubDateTime = "00/00/0000";
 
         System.out.println("Please give Assigment's subDateTime in the following format (dd/MM/YYYY)");
-        boolean flagKoukou2 = true;
-        while (flagKoukou2 == true && DateUtilities.convertedDateFromString(assignmentSubDateTime).after(DateUtilities.convertedDateFromString(assignmentDeadLine))) {
-            flagKoukou2 = false;
-            try {
-                assignmentSubDateTime = input.nextLine();
-            } catch (Exception dateInput) {
+         invalidInput = true;
+        do {
+            assignmentSubDateTime = input.nextLine();
+            Date temp1 = DateUtilities.convertedDateFromString(assignmentSubDateTime);
+            if (temp1 != null) {
+                
+                if (temp1.after(DateUtilities.convertedDateFromString(assignmentDeadLine))
+                        ||temp1.before(DateUtilities.convertedDateFromString(assignmentGivenDate))) {
+                    
 
-                flagKoukou2 = true;
+                    System.out.println("Please Try again to give Correct Date before DeadLine and after Given Date");
+                } else {
+                    invalidInput = false;
+                }
+            } else{System.out.println("Please give Correct Date form dd//MM/YYYY example 31/03/2021.");}
 
-                System.out.println("Please Try again to give Correct Date Format (dd/MM/YYYY) for example 31/03/2021");
+        } while (invalidInput == true);
 
-            }
-        }
         float assignmentOralMark = -1;
-        boolean flagKoukou3 = true;
+        invalidInput = true;
 
-        System.out.println("Please give Assigment's oralMark");
-        while ((assignmentOralMark < 0 || assignmentOralMark > 100) && flagKoukou3 == true) {
-            flagKoukou3 = false;
+        System.out.println(
+                "Please give Assigment's oralMark");
+        while ((assignmentOralMark < 0 || assignmentOralMark > 100) && invalidInput
+                == true) {
+
             try {
+
                 assignmentOralMark = input.nextFloat();
-            } catch (Exception floatInput) {
-                flagKoukou3 = true;
-                System.out.println("Please Try again to give Correct Mark from 0 to 100.");
+            } catch (InputMismatchException er) {
+
+                System.out.println("Please Try again to give Correct Mark Float from 0 to 100.");
+            }
+            if (assignmentOralMark >= 0 && assignmentOralMark <= 100) {
+                invalidInput = false;
             }
         }
-        boolean flagKoukou4 = true;
+
+         invalidInput = true;
         float assignmentTotalMark = -1;
-        System.out.println("Please give Assigment's totalMark");
-        while ((assignmentTotalMark < 0 || assignmentTotalMark > 100) && flagKoukou4 == true) {
-            flagKoukou4 = false;
+
+        System.out.println(
+                "Please give Assigment's totalMark");
+        while ((assignmentTotalMark < 0 || assignmentTotalMark > 100) && invalidInput
+                == true) {
+
             try {
                 assignmentTotalMark = input.nextFloat();
 
-            } catch (Exception floatInput) {
-                flagKoukou4 = true;
-                System.out.println("Please Try again to give Correct Mark from 0 to 100.");
+            } catch (InputMismatchException er) {
+
+                System.out.println("Please Try again to give Correct Mark Float from 0 to 100.");
+            }
+            if (assignmentTotalMark >= 0 && assignmentTotalMark <= 100) {
+                invalidInput = false;
             }
         }
         //Created a Assignment
@@ -545,35 +586,44 @@ public class Main {
         String studentDateOfBirth = "00/00/0000";
 
         System.out.println("Please give the new Student's information date of birth in the following format (dd/MM/YYYY)");
-        boolean flagKoukou5 = true;
-        while (flagKoukou5 == true) {
-            flagKoukou5 = false;
-            try {
-                studentDateOfBirth = input.nextLine();
-            } catch (Exception dateInput) {
-                flagKoukou5 = true;
-                System.out.println("Please Try again to give Correct Date Format (dd/MM/YYYY) for example 31/03/2021");
+        boolean invalidInput = true;
+        while (invalidInput == true) {
 
+            studentDateOfBirth = input.nextLine();
+
+            Date test = DateUtilities.convertedDateFromString(studentDateOfBirth);
+            if (test != null) {
+                invalidInput = false;
             }
         }
-        int studentTuitionFees = -1;
-        boolean flagKoukou6 = true;
 
+        String studentTuitionFees;
+        invalidInput = true;
+        int tuitionTest = -1;
         System.out.println("Please give the new Student's tuitionFees");
-        while (flagKoukou6 == true || studentTuitionFees < 0) {
-            flagKoukou6 = false;
+
+        do {
+            studentTuitionFees = input.nextLine();
+
             try {
-                studentTuitionFees = input.nextInt();
-            } catch (Exception intInput) {
-                flagKoukou6 = true;
-                System.out.println("Please Try again to give Correct TuitionFees >0 for example 100.");
-                System.out.println(intInput.getMessage());
+                tuitionTest = Integer.parseInt(studentTuitionFees);
+
+            } catch (NumberFormatException e) {
+
+                System.out.println("Please Try again to give a interger For tuition");
+
             }
-        }
+            if (tuitionTest < 0) {
+                System.out.println("Please Give Correct number for Tuition Fees >0");
+            } else {
+                invalidInput = false;
+            }
+
+        } while (invalidInput);
 
         //Created a Student
         Student student = new Student(studentFistName, studentLastName, (studentDateOfBirth),
-                studentTuitionFees);
+                tuitionTest);
 
         return student;
 
@@ -612,32 +662,43 @@ public class Main {
         String courseType = input.nextLine();
 
         String courseStart_Date = "00/00/0000";
-        boolean flagKoukou7 = true;
+        boolean invalidInput = true;
 
         System.out.println("Please give Course start_date in the following format (dd/MM/YYYY)");
-        while (flagKoukou7 == true) {
-            flagKoukou7 = false;
-            try {
-                courseStart_Date = input.nextLine();
-            } catch (Exception dateInput) {
-                flagKoukou7 = true;
-                System.out.println("Please Try again to give Correct Date Format (dd/MM/YYYY) for example 31/03/2021");
+        Date test1 = DateUtilities.convertedDateFromString("00/00/0000");
+        do {
+
+            courseStart_Date = input.nextLine();
+
+            test1 = DateUtilities.convertedDateFromString(courseStart_Date);
+            if (test1 == null) {
+                System.out.println("Please try Again");
+
+            } else {
+                invalidInput = false;
             }
-        }
+
+        } while (invalidInput == true);
 
         String courseEnd_Date = "00/00/0001";
-        boolean flagKoukou8 = true;
+        invalidInput = true;
 
         System.out.println("Please give Course end_date in the following format (dd/MM/YYYY)");
-        while (flagKoukou8 == true && DateUtilities.convertedDateFromString(courseStart_Date).after(DateUtilities.convertedDateFromString(courseEnd_Date))) {
-            flagKoukou8 = false;
-            try {
-                courseEnd_Date = input.nextLine();
-            } catch (Exception dateInput) {
-                flagKoukou8 = true;
-                System.out.println("Please Try again to give Correct Date Format (dd/MM/YYYY) for example 31/03/2021");
-            }
-        }
+        Date test = DateUtilities.convertedDateFromString("00/00/0001");
+        do {
+            courseEnd_Date = input.nextLine();
+            test = DateUtilities.convertedDateFromString(courseEnd_Date);
+            if (test != null) {
+
+                if (test.before(DateUtilities.convertedDateFromString(courseStart_Date))) {
+                    System.out.println("Please Try again to give Correct Date after Start_Date");
+                } else {
+                    invalidInput = false;
+                }
+
+            }else{System.out.println("Please try again Give Correct Date input example 31/03/2021.");}
+        } while (invalidInput == true);
+
         Course course = new Course(courseTitle, courseStream, courseType,
                 courseStart_Date, courseEnd_Date);
 
