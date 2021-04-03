@@ -468,7 +468,7 @@ public class Main {
         String assignmentDeadLine = "00/00/0000";
         System.out.println("Please give Assigment's deadLine in the following format (dd/MM/YYYY)");
         boolean flagKoukou1 = true;
-        while (flagKoukou1 == true) {
+        while (flagKoukou1 == true && DateUtilities.convertedDateFromString(assignmentGivenDate).after(DateUtilities.convertedDateFromString(assignmentDeadLine)) ) {
             flagKoukou1 = false;
             try {
                 assignmentDeadLine = input.nextLine();
@@ -484,7 +484,7 @@ public class Main {
 
         System.out.println("Please give Assigment's subDateTime in the following format (dd/MM/YYYY)");
         boolean flagKoukou2 = true;
-        while (flagKoukou2 == true) {
+        while (flagKoukou2 == true && DateUtilities.convertedDateFromString(assignmentSubDateTime).after(DateUtilities.convertedDateFromString(assignmentDeadLine))) {
             flagKoukou2 = false;
             try {
                 assignmentSubDateTime = input.nextLine();
@@ -496,11 +496,12 @@ public class Main {
 
             }
         }
-
-        boolean flagKoukou3 = true;
         float assignmentOralMark = -1;
+        boolean flagKoukou3 = true;
+
         System.out.println("Please give Assigment's oralMark");
-        while (assignmentOralMark < 0 && assignmentOralMark > 100) {
+        while (assignmentOralMark < 0 || assignmentOralMark > 100 && flagKoukou3 == true) {
+            flagKoukou3 = false;
             try {
                 assignmentOralMark = input.nextFloat();
             } catch (Exception floatInput) {
@@ -511,8 +512,8 @@ public class Main {
         boolean flagKoukou4 = true;
         float assignmentTotalMark = -1;
         System.out.println("Please give Assigment's totalMark");
-        while (assignmentTotalMark < 0 && assignmentTotalMark > 100) {
-
+        while ((assignmentTotalMark < 0 || assignmentTotalMark > 100) && flagKoukou4 == true) {
+            flagKoukou4 = false;
             try {
                 assignmentTotalMark = input.nextFloat();
 
@@ -521,6 +522,7 @@ public class Main {
                 System.out.println("Please Try again to give Correct Mark from 0 to 100.");
             }
         }
+        //Created a Assignment
         Assignment assignment = new Assignment(assignmentTitle, assignmentDescription,
                 assignmentDeadLine, assignmentGivenDate, assignmentSubDateTime, assignmentOralMark, assignmentTotalMark);
 
@@ -537,19 +539,37 @@ public class Main {
         System.out.println("Pleas give the new Student's information last name");
         String studentLastName = input.nextLine();
 
+        String studentDateOfBirth = "00/00/0000";
+
         System.out.println("Please give the new Student's information date of birth in the following format (dd/MM/YYYY)");
-        String studentDateOfBirth = input.nextLine();
+        boolean flagKoukou5 = true;
+        while (flagKoukou5 == true) {
+            try {
+                studentDateOfBirth = input.nextLine();
+            } catch (Exception dateInput) {
+                flagKoukou5 = true;
+                System.out.println("Please Try again to give Correct Date Format (dd/MM/YYYY) for example 31/03/2021");
+            }
+        }
+        int studentTuitionFees = -1;
+        boolean flagKoukou6 = true;
 
         System.out.println("Please give the new Student's tuitionFees");
-        int studentTuitionFees = input.nextInt();
+        while (flagKoukou6 == true && (studentTuitionFees < 0)) {
+            try {
+                studentTuitionFees = input.nextInt();
+            } catch (Exception intInput) {
+                flagKoukou6 = true;
+                System.out.println("Please Try again to give Correct TuitionFees >0 for example 100.");
+            }
+        }
 
-        //store the info of the student  to the studentsAll list?
+        //Created a Student
         Student student = new Student(studentFistName, studentLastName, (studentDateOfBirth),
                 studentTuitionFees);
 
         return student;
 
-        //Created and Stored a Student
     }
 
     public static Trainer inputNewTrainer() {
@@ -584,11 +604,33 @@ public class Main {
         System.out.println("Please give Course Type");
         String courseType = input.nextLine();
 
-        System.out.println("Please give Course start_date in the following format (dd/MM/YYYY)");
-        String courseStart_Date = input.nextLine();
-        System.out.println("Please give Course end_date in the following format (dd/MM/YYYY)");
-        String courseEnd_Date = input.nextLine();
+        String courseStart_Date = "00/00/0000";
+        boolean flagKoukou7 = true;
 
+        System.out.println("Please give Course start_date in the following format (dd/MM/YYYY)");
+        while (flagKoukou7 == true) {
+            flagKoukou7 = false;
+            try {
+                courseStart_Date = input.nextLine();
+            } catch (Exception dateInput) {
+                flagKoukou7 = true;
+                System.out.println("Please Try again to give Correct Date Format (dd/MM/YYYY) for example 31/03/2021");
+            }
+        }
+
+        String courseEnd_Date = "00/00/0001";
+        boolean flagKoukou8 = true;
+
+        System.out.println("Please give Course end_date in the following format (dd/MM/YYYY)");
+        while (flagKoukou8 == true && DateUtilities.convertedDateFromString(courseStart_Date).after(DateUtilities.convertedDateFromString(courseEnd_Date))) {
+            flagKoukou8 = false;
+            try {
+                courseEnd_Date = input.nextLine();
+            } catch (Exception dateInput) {
+                flagKoukou8 = true;
+                System.out.println("Please Try again to give Correct Date Format (dd/MM/YYYY) for example 31/03/2021");
+            }
+        }
         Course course = new Course(courseTitle, courseStream, courseType,
                 courseStart_Date, courseEnd_Date);
 

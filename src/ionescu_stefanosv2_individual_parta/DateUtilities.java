@@ -1,12 +1,12 @@
 package ionescu_stefanosv2_individual_parta;
 
 
-import static ionescu_stefanosv2_individual_parta.Main.assigmentsAll;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.ZoneId;
-import java.time.format.DateTimeFormatter;
+
 import java.util.Date;
 
 
@@ -56,11 +56,4 @@ public  class DateUtilities {
     }
 }
 
-      //  Assignment assigment0 = new Assignment("title1", "description1", "01/03/2021", "08/03/2021", "07/03/2021", 32, 78);
-      //  Assignment assigment1 = new Assignment("title1", "description1", "01/03/2021", "08/03/2021", "07/03/2021", 32, 78);
-      //  assigmentsAll.add(assigment0);
-      //  assigmentsAll.add(assigment1);
-
-      //  LocalDate dateTest = DateUtilities.convertedLocalDateFromDate(assigmentsAll.get(1).getDeadLine());
-      //  System.out.println(dateTest);
-        
+     

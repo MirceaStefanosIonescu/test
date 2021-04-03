@@ -56,37 +56,3 @@ public class CourseInfomation {
     }
 
 }
-   /*
-        for (CourseInfomation courseInfo : courseInfoList) {
-            courseInfo.getCourse().getTitle();
-            for (Student student : courseInfo.getStudents()) {
-                student.getFirstName();
-            }
-
-        }
-         */
-
-/*
- public static void printStudentsPerCourse(ArrayList<CourseInfomation> courseInfoList) {
-
-        for (CourseInfomation course : courseInfoList) {
-            System.out.println();
-            System.out.println("The Course with Name, Stream and Type: " + course.getCourse().getTitle()
-                    + " " + course.getCourse().getStream()
-                    + " " + course.getCourse().getType() + "\nWith Start And End Date: "
-                    + DateUtilities.convertDateToString(course.getCourse().getStartasDate()) + " "
-                    + DateUtilities.convertDateToString(course.getCourse().getEndDate()));
-            for (Student student : course.getStudents()) {
-                System.out.println("Has student with First And Last Name" + student.getFirstName()
-                        + " " + student.getLastName() + "\nBirthDay and Tuitions Fees: "
-                        + DateUtilities.convertDateToString(student.getDateOfBirth())
-                        + " " + student.getTuitionFees());
-
-            }
-        }
-    }
-
-
-
-}
-*/
