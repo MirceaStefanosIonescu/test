@@ -8,17 +8,24 @@ import java.time.LocalDate;
 import java.time.ZoneId;
 
 import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 
 public  class DateUtilities {
     private static final SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
 
-    public static Date convertedDateFromString(String date) throws ParseException {
+    public static Date convertedDateFromString(String date)  {
 
-        //to SimpleDateFormat einai o Constructor (einai i morfi tou xronou pou dilono)
-        Date result = formatter.parse(date);
-
-        return result;
+        try {
+            //to SimpleDateFormat einai o Constructor (einai i morfi tou xronou pou dilono)
+            Date result = formatter.parse(date);
+            
+            return result;
+        } catch (ParseException ex) {
+            System.out.println("Please Try again to give Correct Date Format (dd/MM/YYYY)");
+        }
+    return null;
     }
 
     public static LocalDate convertedDateToLocalDate(String date) throws ParseException {

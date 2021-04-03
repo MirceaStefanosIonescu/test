@@ -250,7 +250,7 @@ public class Main {
             try {
                 userChoise = input.nextInt();
 
-            } catch (Exception n1) {
+            } catch (Exception inputInt) {
                 String blackHole = input.nextLine();
                 System.out.println("Please give an input of integer number from (1,2,3) ");
 
@@ -468,18 +468,21 @@ public class Main {
         String assignmentDeadLine = "00/00/0000";
         System.out.println("Please give Assigment's deadLine in the following format (dd/MM/YYYY)");
         boolean flagKoukou1 = true;
-        while (flagKoukou1 == true && DateUtilities.convertedDateFromString(assignmentGivenDate).after(DateUtilities.convertedDateFromString(assignmentDeadLine)) ) {
-            flagKoukou1 = false;
-            try {
-                assignmentDeadLine = input.nextLine();
 
-            } catch (Exception dateInput) {
+        do {
+            assignmentDeadLine = input.nextLine();
+            Date temp = DateUtilities.convertedDateFromString(assignmentGivenDate);
+            if (temp != null) {
 
-                flagKoukou = true;
+                if (temp.after(DateUtilities.convertedDateFromString(assignmentDeadLine))) {
 
-                System.out.println("Please Try again to give Correct Date Format (dd/MM/YYYY) for example 31/03/2021");
+                    System.out.println("Please Try again to give Correct Date before DeadLine");
+                } else {
+                    flagKoukou = false;
+                }
             }
-        }
+
+        } while (flagKoukou1 == true);
         String assignmentSubDateTime = "00/00/0000";
 
         System.out.println("Please give Assigment's subDateTime in the following format (dd/MM/YYYY)");
@@ -500,7 +503,7 @@ public class Main {
         boolean flagKoukou3 = true;
 
         System.out.println("Please give Assigment's oralMark");
-        while (assignmentOralMark < 0 || assignmentOralMark > 100 && flagKoukou3 == true) {
+        while ((assignmentOralMark < 0 || assignmentOralMark > 100) && flagKoukou3 == true) {
             flagKoukou3 = false;
             try {
                 assignmentOralMark = input.nextFloat();
@@ -544,23 +547,27 @@ public class Main {
         System.out.println("Please give the new Student's information date of birth in the following format (dd/MM/YYYY)");
         boolean flagKoukou5 = true;
         while (flagKoukou5 == true) {
+            flagKoukou5 = false;
             try {
                 studentDateOfBirth = input.nextLine();
             } catch (Exception dateInput) {
                 flagKoukou5 = true;
                 System.out.println("Please Try again to give Correct Date Format (dd/MM/YYYY) for example 31/03/2021");
+
             }
         }
         int studentTuitionFees = -1;
         boolean flagKoukou6 = true;
 
         System.out.println("Please give the new Student's tuitionFees");
-        while (flagKoukou6 == true && (studentTuitionFees < 0)) {
+        while (flagKoukou6 == true || studentTuitionFees < 0) {
+            flagKoukou6 = false;
             try {
                 studentTuitionFees = input.nextInt();
             } catch (Exception intInput) {
                 flagKoukou6 = true;
                 System.out.println("Please Try again to give Correct TuitionFees >0 for example 100.");
+                System.out.println(intInput.getMessage());
             }
         }
 
