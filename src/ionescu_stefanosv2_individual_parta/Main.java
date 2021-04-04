@@ -158,7 +158,7 @@ public class Main {
 
                 addDummyData();
                 createCourseInfomationListSynth();
-            
+
                 printAllStudentsSynth(studentsAll);
                 System.out.println("Part1 Complete");
                 System.out.println();
@@ -488,7 +488,7 @@ public class Main {
         } while (invalidInput == true);
         String assignmentDeadLine = "00/00/0001";
         System.out.println("Please give Assigment's deadLine in the following format (dd/MM/YYYY)");
-         invalidInput = true;
+        invalidInput = true;
 
         do {
             assignmentDeadLine = input.nextLine();
@@ -509,21 +509,22 @@ public class Main {
         String assignmentSubDateTime = "00/00/0000";
 
         System.out.println("Please give Assigment's subDateTime in the following format (dd/MM/YYYY)");
-         invalidInput = true;
+        invalidInput = true;
         do {
             assignmentSubDateTime = input.nextLine();
             Date temp1 = DateUtilities.convertedDateFromString(assignmentSubDateTime);
             if (temp1 != null) {
-                
+
                 if (temp1.after(DateUtilities.convertedDateFromString(assignmentDeadLine))
-                        ||temp1.before(DateUtilities.convertedDateFromString(assignmentGivenDate))) {
-                    
+                        || temp1.before(DateUtilities.convertedDateFromString(assignmentGivenDate))) {
 
                     System.out.println("Please Try again to give Correct Date before DeadLine and after Given Date");
                 } else {
                     invalidInput = false;
                 }
-            } else{System.out.println("Please give Correct Date form dd//MM/YYYY example 31/03/2021.");}
+            } else {
+                System.out.println("Please give Correct Date form dd//MM/YYYY example 31/03/2021.");
+            }
 
         } while (invalidInput == true);
 
@@ -537,17 +538,21 @@ public class Main {
 
             try {
 
-                assignmentOralMark = input.nextFloat();
-            } catch (InputMismatchException er) {
+                String assignmentOralMark1 = input.nextLine();
+                assignmentOralMark = Float.parseFloat(assignmentOralMark1);
+            } catch (NumberFormatException | InputMismatchException er) {
 
                 System.out.println("Please Try again to give Correct Mark Float from 0 to 100.");
             }
-            if (assignmentOralMark >= 0 && assignmentOralMark <= 100) {
+
+            if ((assignmentOralMark < 0 || assignmentOralMark > 100)) {
+                System.out.println("Please try again");
+            } else {
                 invalidInput = false;
             }
         }
 
-         invalidInput = true;
+        invalidInput = true;
         float assignmentTotalMark = -1;
 
         System.out.println(
@@ -556,14 +561,16 @@ public class Main {
                 == true) {
 
             try {
-                assignmentTotalMark = input.nextFloat();
-
-            } catch (InputMismatchException er) {
+                String assignmentTotalMark1 = input.nextLine();
+                assignmentTotalMark = Float.parseFloat(assignmentTotalMark1);
+            } catch (NumberFormatException | InputMismatchException er) {
 
                 System.out.println("Please Try again to give Correct Mark Float from 0 to 100.");
             }
             if (assignmentTotalMark >= 0 && assignmentTotalMark <= 100) {
                 invalidInput = false;
+            } else {
+                System.out.println("Please try again");
             }
         }
         //Created a Assignment
@@ -626,7 +633,6 @@ public class Main {
                 tuitionTest);
 
         return student;
-
     }
 
     public static Trainer inputNewTrainer() {
@@ -696,7 +702,9 @@ public class Main {
                     invalidInput = false;
                 }
 
-            }else{System.out.println("Please try again Give Correct Date input example 31/03/2021.");}
+            } else {
+                System.out.println("Please try again Give Correct Date input example 31/03/2021.");
+            }
         } while (invalidInput == true);
 
         Course course = new Course(courseTitle, courseStream, courseType,

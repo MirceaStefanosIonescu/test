@@ -1,10 +1,10 @@
 package ionescu_stefanosv2_individual_parta;
 
 import java.text.ParseException;
-import java.util.ArrayList;
+
 
 import java.util.Date;
-import java.util.Scanner;
+
 
 public class Assignment {
 
